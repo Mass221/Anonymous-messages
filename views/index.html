@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anonymous - Messages Anonymes</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">Anonymous</div>
+      <div class="tagline">Messages anonymes</div>
+    </div>
+    
+    <div class="create-link-section">
+      <div class="create-title">Créez votre lien Anonymous</div>
+      <div class="create-subtitle">
+        Recevez des messages anonymes de vos amis et followers
+      </div>
+      
+      <form method="POST" action="/create-user">
+        <input type="text" 
+               name="username" 
+               placeholder="Votre nom d'utilisateur" 
+               class="username-input"
+               required
+               pattern="[a-zA-Z0-9_-]+"
+               title="Lettres, chiffres, tirets et underscores seulement">
+        <button type="submit" class="create-btn">
+          Créer mon lien
+        </button>
+      </form>
+    </div>
+  </div>
+  
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // Validation du formulaire
+    document.querySelector('form').addEventListener('submit', function(e) {
+      const username = document.querySelector('input[name="username"]').value.trim();
+      if (!username.match(/^[a-zA-Z0-9_-]+$/)) {
+        e.preventDefault();
+        showToast('Nom d\'utilisateur invalide ! Utilisez seulement des lettres, chiffres, tirets et underscores.');
+      }
+    });
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.style.display = 'block';
+      toast.style.background = '#ff6b6b';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
+    }
+
+    // Gestion des erreurs URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('error') === 'invalid') {
+      showToast('Nom d\'utilisateur invalide ! Veuillez réessayer.');
+    }
+  </script>
+</body>
+</html>

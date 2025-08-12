@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages de @{{username}} - Admin</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <button onclick="window.location.href='/admin?pass={{adminPass}}'" class="back-btn">←</button>
+      <div class="logo">@{{username}}</div>
+      <div class="tagline">{{messageCount}} message(s)</div>
+    </div>
+    
+    <div style="padding: 20px; background: #f8f9fa; border-bottom: 1px solid #e9ecef;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <div>
+          <strong>Utilisateur :</strong> @{{username}}<br>
+          <small style="color: #666;">Messages : {{messageCount}}</small>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button onclick="window.open('/u/{{username}}', '_blank')" class="nav-btn" style="min-width: auto;">
+            👀 Voir profil public
+          </button>
+          <button onclick="if(confirm('Supprimer tous les messages de @{{username}} ?')) { deleteAllMessages(); }" 
+                  style="background: #ff6b6b; color: white; border: none; padding: 8px 15px; border-radius: 10px; cursor: pointer;">
+            🗑 Tout supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="messages-list">
+      {{messagesList}}
+    </div>
+
+    <div style="padding: 20px; text-align: center;">
+      <a href="/admin?pass={{adminPass}}" class="send-btn" style="text-decoration: none; display: inline-block;">
+        ⬅ Retour à l'administration
+      </a>
+    </div>
+  </div>
+
+  <script>
+    function deleteAllMessages() {
+      // Pour l'instant, redirection vers la suppression utilisateur
+      // Dans une vraie app, on aurait une route spécifique pour supprimer tous les messages
+      if(confirm('⚠ Cela supprimera TOUS les messages de cet utilisateur. Continuer ?')) {
+        window.location.href = '/delete-user/{{username}}?pass={{adminPass}}';
+      }
+    }
+
+    // Animation des messages
+    document.addEventListener('DOMContentLoaded', function() {
+      const messages = document.querySelectorAll('.message-item');
+      messages.forEach((message, index) => {
+        message.style.opacity = '0';
+        message.style.transform = 'translateY(10px)';
+        message.style.transition = 'all 0.3s ease';
+        
+        setTimeout(() => {
+          message.style.opacity = '1';
+          message.style.transform = 'translateY(0)';
+        }, index * 80);
+      });
+    });
+
+    // Raccourci clavier pour retour rapide
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        window.location.href = '/admin?pass={{adminPass}}';
+      }
+    });
+
+    // Auto-refresh toutes les 60 secondes
+    setInterval(() => {
+      window.location.reload();
+    }, 60000);
+  </script>
+</body>
+</html>

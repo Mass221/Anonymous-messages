@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Dashboard - @{{username}}</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <button onclick="window.location.href='/'" class="back-btn">←</button>
+      <div class="logo">@{{username}}</div>
+      <div class="tagline">Votre dashboard Anonymous</div>
+    </div>
+    
+    <div class="profile-section">
+      <div class="avatar">{{USERNAME_UPPER}}</div>
+      <div class="username">@{{username}}</div>
+      <div class="user-link">{{userLink}}</div>
+      <div style="color: #666; font-size: 0.9em;">{{messageCount}} message(s) reçu(s)</div>
+    </div>
+    
+    <div class="share-section">
+      <div class="share-title">📤 Partager votre lien</div>
+      <div class="share-buttons">
+        <a href="https://wa.me/?text={{whatsappMessage}}" 
+           class="share-btn whatsapp-btn" 
+           target="_blank">
+          📱 WhatsApp
+        </a>
+        <button onclick="copyLink()" class="share-btn copy-btn">
+          📋 Copier le lien
+        </button>
+      </div>
+    </div>
+    
+    <div class="dashboard-nav">
+      <a href="/messages/{{username}}" class="nav-btn">
+        💬 Mes Messages ({{messageCount}})
+      </a>
+      <a href="/u/{{username}}" class="nav-btn">
+        👀 Voir mon profil public
+      </a>
+    </div>
+    
+    <div style="padding: 30px; text-align: center;">
+      <div style="color: #666; margin-bottom: 20px;">
+        Partagez ce lien avec vos amis pour recevoir des messages anonymes !
+      </div>
+      <a href="/" style="color: #667eea; text-decoration: none; font-weight: 600;">
+        🏠 Créer un autre lien Anonymous
+      </a>
+    </div>
+  </div>
+  
+  <div class="toast" id="toast">Lien copié !</div>
+  
+  <script>
+    function copyLink() {
+      const link = "{{userLink}}";
+      navigator.clipboard.writeText(link).then(() => {
+        showToast("Lien copié dans le presse-papiers !");
+      }).catch(() => {
+        // Fallback pour les navigateurs plus anciens
+        const textArea = document.createElement('textarea');
+        textArea.value = link;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showToast("Lien copié !");
+      });
+    }
+    
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 300);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administration Anonymous</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <button onclick="window.location.href='/'" class="back-btn">←</button>
+      <div class="logo">Admin</div>
+      <div class="tagline">Panel d'administration</div>
+    </div>
+    
+    <div class="stats">
+      <strong>{{totalUsers}}</strong> utilisateurs • <strong>{{totalMessages}}</strong> messages total
+    </div>
+    
+    <div class="messages-list">
+      {{usersList}}
+    </div>
+
+    <div style="padding: 20px; text-align: center;">
+      <button onclick="refreshData()" class="nav-btn" style="margin-right: 10px;">
+        🔄 Actualiser
+      </button>
+      <button onclick="exportData()" class="nav-btn">
+        📄 Exporter les données
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function refreshData() {
+      window.location.reload();
+    }
+
+    function exportData() {
+      // Créer un rapport simple des statistiques
+      const stats = {
+        totalUsers: {{totalUsers}},
+        totalMessages: {{totalMessages}},
+        exportDate: new Date().toLocaleString('fr-FR')
+      };
+      
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(stats, null, 2));
+      const downloadAnchorNode = document.createElement('a');
+      downloadAnchorNode.setAttribute("href", dataStr);
+      downloadAnchorNode.setAttribute("download", "ngl-stats.json");
+      document.body.appendChild(downloadAnchorNode);
+      downloadAnchorNode.click();
+      downloadAnchorNode.remove();
+    }
+
+    // Animation des éléments de la liste
+    document.addEventListener('DOMContentLoaded', function() {
+      const items = document.querySelectorAll('.message-item');
+      items.forEach((item, index) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(-20px)';
+        item.style.transition = 'all 0.3s ease';
+        
+        setTimeout(() => {
+          item.style.opacity = '1';
+          item.style.transform = 'translateX(0)';
+        }, index * 50);
+      });
+    });
+
+    // Confirmation pour les suppressions multiples
+    function confirmBulkDelete() {
+      return confirm('⚠ Cette action est irréversible. Êtes-vous sûr de vouloir continuer ?');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Message envoyé !</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="success-message">
+      <h2 style="margin-bottom: 15px;">✅ Message envoyé !</h2>
+      <p>Votre message anonyme a été transmis à @{{username}}</p>
+    </div>
+   
+    <div style="padding: 30px; text-align: center;">
+      <a href="/u/{{username}}" class="send-btn" style="text-decoration: none; display: inline-block; margin-bottom: 15px;">
+        Envoyer un autre message
+      </a>
+    </div>
+    
+    <div class="conversion-prompt">
+      <h3 style="margin-bottom: 15px;">🎉 Créez votre propre lien Anonymous !</h3>
+      <p style="margin-bottom: 15px;">Vous aussi, recevez des messages anonymes de vos amis</p>
+      <form method="POST" action="/create-user" style="display: inline;">
+        <input type="text" 
+               name="username" 
+               placeholder="Votre nom d'utilisateur" 
+               style="padding: 12px; border-radius: 20px; border: none; margin-right: 10px; width: 200px; max-width: 100%;"
+               required 
+               pattern="[a-zA-Z0-9_-]+">
+        <button type="submit" class="conversion-btn">Créer mon lien</button>
+      </form>
+      <div style="margin-top: 15px;">
+        <a href="/" style="color: rgba(255,255,255,0.8); text-decoration: none;">
+          Ou retour à l'accueil
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Animation de succès
+    document.addEventListener('DOMContentLoaded', function() {
+      const successMessage = document.querySelector('.success-message');
+      successMessage.style.opacity = '0';
+      successMessage.style.transform = 'scale(0.9)';
+      successMessage.style.transition = 'all 0.5s ease';
+      
+      setTimeout(() => {
+        successMessage.style.opacity = '1';
+        successMessage.style.transform = 'scale(1)';
+      }, 100);
+
+      // Animation du prompt de conversion
+      const conversionPrompt = document.querySelector('.conversion-prompt');
+      conversionPrompt.style.opacity = '0';
+      conversionPrompt.style.transform = 'translateY(20px)';
+      conversionPrompt.style.transition = 'all 0.5s ease';
+      
+      setTimeout(() => {
+        conversionPrompt.style.opacity = '1';
+        conversionPrompt.style.transform = 'translateY(0)';
+      }, 500);
+    });
+
+    // Validation du formulaire de conversion
+    document.querySelector('form').addEventListener('submit', function(e) {
+      const username = document.querySelector('input[name="username"]').value.trim();
+      if (!username.match(/^[a-zA-Z0-9_-]+$/)) {
+        e.preventDefault();
+        alert('Nom d\'utilisateur invalide ! Utilisez seulement des lettres, chiffres, tirets et underscores.');
+      }
+    });
+  </script>
+</body>
+</html>

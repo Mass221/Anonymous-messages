@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Envoyer un message à @{{username}}</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <button onclick="history.back()" class="back-btn">←</button>
+      <div class="logo">Anonymous</div>
+      <div class="tagline">Envoyez un message anonyme</div>
+    </div>
+    
+    <div class="profile-section">
+      <div class="avatar">{{USERNAME_UPPER}}</div>
+      <div class="username">@{{username}}</div>
+      <div class="user-link">anonymous.localhost/{{username}}</div>
+      <div style="color: #666; font-size: 0.9em;">{{messageCount}} message(s) reçu(s)</div>
+    </div>
+    
+    <div class="message-form">
+      <div class="form-title">Envoyez votre message anonyme</div>
+      <form method="POST" action="/send/{{username}}" id="messageForm">
+        <div class="textarea-container">
+          <textarea name="message" 
+                    class="message-textarea" 
+                    placeholder="Écrivez votre message anonyme..."
+                    maxlength="300"
+                    required
+                    oninput="updateCharCount()"></textarea>
+          <div class="char-count" id="charCount">0/300</div>
+        </div>
+        <button type="submit" class="send-btn" id="sendBtn">
+          Envoyer anonymement
+        </button>
+      </form>
+      
+      <div style="text-align: center;">
+        <a href="/" style="color: #667eea; text-decoration: none; font-weight: 600;">
+          Créer votre propre lien Anonymous
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    function updateCharCount() {
+      const textarea = document.querySelector('.message-textarea');
+      const charCount = document.getElementById('charCount');
+      const sendBtn = document.getElementById('sendBtn');
+      
+      const length = textarea.value.length;
+      charCount.textContent = length + '/300';
+      
+      if (length === 0) {
+        sendBtn.disabled = true;
+        sendBtn.style.background = '#ccc';
+      } else {
+        sendBtn.disabled = false;
+        sendBtn.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+      }
+      
+      if (length > 250) {
+        charCount.style.color = '#ff6b6b';
+      } else {
+        charCount.style.color = '#999';
+      }
+    }
+    
+    // Initialiser le compteur
+    updateCharCount();
+
+    // Validation du formulaire
+    document.getElementById('messageForm').addEventListener('submit', function(e) {
+      const message = document.querySelector('.message-textarea').value.trim();
+      if (message.length === 0) {
+        e.preventDefault();
+        alert('Veuillez écrire un message avant d\'envoyer.');
+      }
+    });
+  </script>
+</body>
+</html>

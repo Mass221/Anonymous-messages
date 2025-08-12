@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accès Refusé - Anonymous</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">🚫</div>
+      <div class="tagline">Accès refusé</div>
+    </div>
+    
+    <div style="padding: 40px; text-align: center;">
+      <div style="font-size: 4em; margin-bottom: 20px; opacity: 0.3;">🔒</div>
+      
+      <h2 style="margin-bottom: 15px; color: #333;">Accès non autorisé</h2>
+      
+      <p style="color: #666; margin-bottom: 30px; line-height: 1.5;">
+        Vous n'avez pas les permissions nécessaires pour accéder à cette page.
+        <br>
+        Veuillez vérifier vos identifiants ou contacter l'administrateur.
+      </p>
+      
+      <a href="/" class="create-btn" style="text-decoration: none; display: inline-block; margin-bottom: 20px;">
+        🏠 Retour à l'accueil
+      </a>
+      
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+        <small style="color: #999;">
+          Code d'erreur: 403 - Forbidden
+        </small>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Animation d'entrée
+    document.addEventListener('DOMContentLoaded', function() {
+      const container = document.querySelector('.container');
+      container.style.opacity = '0';
+      container.style.transform = 'scale(0.95)';
+      container.style.transition = 'all 0.5s ease';
+      
+      setTimeout(() => {
+        container.style.opacity = '1';
+        container.style.transform = 'scale(1)';
+      }, 100);
+    });
+
+    // Redirection automatique après 10 secondes (optionnel)
+    setTimeout(() => {
+      if (confirm('Redirection vers l\'accueil ?')) {
+        window.location.href = '/';
+      }
+    }, 10000);
+
+    // Easter egg - Triple clic pour révéler l'URL admin (pour debug)
+    let clickCount = 0;
+    document.querySelector('.logo').addEventListener('click', function() {
+      clickCount++;
+      if (clickCount === 3) {
+        console.log('Admin URL: /admin?pass=admin123');
+        clickCount = 0;
+      }
+      setTimeout(() => { clickCount = 0; }, 2000);
+    });
+  </script>
+</body>
+</html>
