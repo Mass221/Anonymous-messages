@@ -121,6 +121,21 @@ app.get('/dashboard/:username', (req, res) => {
   res.send(html);
 });
 
+app.get('/u/:username', (req, res) => {
+  const username = req.params.username.toLowerCase();
+  createUser(username);
+  
+  const messageCount = users[username].messages.length;
+  
+  const html = loadTemplate('send-message.html', {
+    username: escapeHtml(username),
+    USERNAME_UPPER: escapeHtml(username.charAt(0).toUpperCase()),
+    messageCount: messageCount
+  });
+  
+  res.send(html);
+});
+
 app.get('/messages/:username', (req, res) => {
   const username = req.params.username.toLowerCase();
   
