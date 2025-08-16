@@ -284,6 +284,53 @@ app.get('/admin-user/:username', checkAdminAuth, (req, res) => {
 
   res.send(html);
 });
+// ===== 1. Modifications dans app.js (à ajouter) =====
+
+// Route pour afficher le détail d'un message
+app.get('/message/:username/:messageId', (req, res) => {
+  const username = req.params.username.toLowerCase();
+  const messageId = Number(req.params.messageId);
+  
+  if (!users[username]) {
+    return res.redirect('/');
+  }
+  
+  const userData = users[username];
+  const message = userData.messages.find(m => m.id === messageId);
+  
+  if (!message) {
+    return res.redirect(`/messages/${username}`);
+  }
+  
+  const html = loadTemplate('message-detail.html', {
+    username: username,
+    messageId: messageId,
+    messageText: message.text,
+    messageTime: message.timestamp,
+    totalMessages: userData.messages.length
+  });
+  
+  res.send(html);
+});
+
+// Route pour marquer un message comme lu ou réagi
+app.post('/message/:username/:messageId/reaction', (req, res) => {
+  const username = req.params.username.toLowerCase();
+  const messageId = Number(req.params.messageId);
+  const reaction = req.body.reaction;
+  
+  if (users[username]) {
+    const message = users[username].messages.find(m => m.id === messageId);
+    if (message) {
+      message.reaction = reaction;
+      message.readAt = new Date().toLocaleString('fr-FR');
+    }
+  }
+  
+  res.redirect(`/message/${username}/${messageId}`);
+});
+
+// ===== 2. Nouveau fichier views/message-detail.html =====
 
 app.get('/delete-message/:username/:messageId', checkAdminAuth, (req, res) => {
   const { username, messageId } = req.params;
