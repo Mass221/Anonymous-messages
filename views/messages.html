@@ -30,6 +30,10 @@
   </div>
 
   <script>
+    // Navigation vers le détail d'un message
+function viewMessageDetail(username, messageId) {
+  window.location.href = `/message/${username}/${messageId}`;
+}
     // Auto-refresh des messages toutes les 30 secondes
     setInterval(() => {
       window.location.reload();
