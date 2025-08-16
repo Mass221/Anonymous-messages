@@ -30,30 +30,37 @@
   </div>
 
   <script>
-    // Navigation vers le détail d'un message
+// Récupérer le nom d'utilisateur depuis l'URL
+const username = window.location.pathname.split('/')[2];
+
+// Navigation vers le détail d'un message
 function viewMessageDetail(username, messageId) {
   window.location.href = `/message/${username}/${messageId}`;
 }
-    // Auto-refresh des messages toutes les 30 secondes
-    setInterval(() => {
-      window.location.reload();
-    }, 30000);
 
-    // Animation d'apparition des messages
-    document.addEventListener('DOMContentLoaded', function() {
-      const messages = document.querySelectorAll('.message-item');
-      messages.forEach((message, index) => {
-        message.style.opacity = '0';
-        message.style.transform = 'translateY(20px)';
-        message.style.transition = 'all 0.5s ease';
-        
-        setTimeout(() => {
-          message.style.opacity = '1';
-          message.style.transform = 'translateY(0)';
-        }, index * 100);
-      });
-    });
-  </script>
+// Charger les messages via une API
+// (Pour l'instant, utilisez des données statiques)
+
+// Auto-refresh des messages toutes les 30 secondes
+setInterval(() => {
+  window.location.reload();
+}, 30000);
+
+// Animation d'apparition des messages
+document.addEventListener('DOMContentLoaded', function() {
+  const messages = document.querySelectorAll('.message-item');
+  messages.forEach((message, index) => {
+    message.style.opacity = '0';
+    message.style.transform = 'translateY(20px)';
+    message.style.transition = 'all 0.5s ease';
+    
+    setTimeout(() => {
+      message.style.opacity = '1';
+      message.style.transform = 'translateY(0)';
+    }, index * 100);
+  });
+});
+</script>
 </body>
 </html>
     // Animation d'apparition des messages
