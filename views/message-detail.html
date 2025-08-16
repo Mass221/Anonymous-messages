@@ -187,9 +187,6 @@
     </div>
     
     <div class="action-buttons">
-      <button class="action-btn reveal-btn" onclick="showRevealPopup()">
-        👀 Qui a envoyé ceci ? 👀
-      </button>
       
       <button class="action-btn reply-btn" onclick="replyToMessage()">
         📱 Répondre
@@ -219,21 +216,7 @@
   </div>
 
   <!-- Popup pour révéler l'expéditeur -->
-  <div id="revealPopup" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 1000; display: flex; align-items: center; justify-content: center;">
-    <div style="background: white; padding: 30px; border-radius: 20px; text-align: center; max-width: 350px; margin: 20px;">
-      <h3 style="margin-bottom: 20px;">🔒 Fonction Premium</h3>
-      <p style="margin-bottom: 25px; color: #666; line-height: 1.5;">
-        Cette fonctionnalité permet de révéler qui a envoyé ce message anonyme.
-      </p>
-      <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-        <strong>Bientôt disponible !</strong><br>
-        <small>Version premium à venir</small>
-      </div>
-      <button onclick="closeRevealPopup()" style="background: #6c757d; color: white; border: none; padding: 12px 25px; border-radius: 15px; cursor: pointer;">
-        Fermer
-      </button>
-    </div>
-  </div>
+ 
 
   <script>
     let selectedReaction = null;
