@@ -122,7 +122,6 @@ app.get('/dashboard/:username', (req, res) => {
 });
 
 app.get('/messages/:username', (req, res) => {
-app.get('/messages/:username', (req, res) => {
   const username = req.params.username.toLowerCase();
   
   if (!users[username]) {
