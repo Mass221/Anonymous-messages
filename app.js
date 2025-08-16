@@ -122,39 +122,17 @@ app.get('/dashboard/:username', (req, res) => {
 });
 
 app.get('/messages/:username', (req, res) => {
+app.get('/messages/:username', (req, res) => {
   const username = req.params.username.toLowerCase();
-
+  
   if (!users[username]) {
     return res.redirect('/');
   }
-
+  
   const userData = users[username];
-  let messagesList = '';
-
-  if (userData.messages.length > 0) {
-    messagesList = userData.messages.map(msg => `
-      <div class="message-item">
-        <div class="message-text">${escapeHtml(msg.text)}</div>
-        <div class="message-time">📅 ${escapeHtml(msg.timestamp)}</div>
-      </div>
-    `).join('');
-  } else {
-    messagesList = `
-      <div class="empty-state">
-        <div class="empty-state-icon">💬</div>
-        <h3>Aucun message pour le moment</h3>
-        <p>Partagez votre lien pour commencer à recevoir des messages anonymes !</p>
-      </div>
-    `;
-  }
-
-  const html = loadTemplate('messages.html', {
-    username: escapeHtml(username),
-    messageCount: userData.messages.length,
-    messagesList: messagesList
-  });
-
-  res.send(html);
+  
+  // Juste rediriger vers le fichier HTML statique
+  res.sendFile(path.join(__dirname, 'views', 'messages.html'));
 });
 
 app.get('/u/:username', (req, res) => {
